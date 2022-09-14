@@ -32,21 +32,22 @@ void copy_array(int *dst, const int *src, unsigned int n) {
 
 int make_r_select(int *a, unsigned int l, unsigned int r, unsigned int i) {
     if (is_base_case(l, r)) {
-        return a[0];
+        return a[l];
     }
 
     unsigned int pivot_index{choose_pivot_index(l, r)};
-    swap_elements(a[l], a[i]);
+    swap_elements(a[l], a[pivot_index]);
     unsigned int j{make_partition(a, l, r)};
+    unsigned int k{j - l};
 
-    if (j == i) {
+    if (i == k) {
         return a[j];
     }
-    else if (j > i) {
+    else if (i < k) {
         return make_r_select(a, l, j - 1, i);
     }
     else {
-        return make_r_select(a, j + 1, r, i);
+        return make_r_select(a, j + 1, r, i - k);
     }
 }
 

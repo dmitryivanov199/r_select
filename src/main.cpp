@@ -42,6 +42,10 @@ bool run_tests() {
         unsigned int i{get_random_i(n)};
         int result{r_select(source_a, n, i)};
 
+        if (i > n) {
+            i = n;
+        }
+
         if (std_sorted_a[i - 1] != result) {
             std::cout << "n = " << n << std::endl;
             std::cout << "i = " << i << std::endl;
@@ -93,7 +97,7 @@ int compare_numbers(const void *a, const void *b) {
 
 unsigned int get_random_i(unsigned int n) {
     const unsigned int min{1};
-    const unsigned int max{n};
+    const unsigned int max{1000};
     std::srand(time(0));
     return min + std::rand() % (max - min + 1);
 }

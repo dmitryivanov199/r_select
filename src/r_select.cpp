@@ -31,6 +31,10 @@ void copy_array(int *dst, const int *src, unsigned int n) {
 }
 
 int make_r_select(int *a, unsigned int l, unsigned int r, unsigned int i) {
+    if (i > r) {
+        i = r;
+    }
+
     if (is_base_case(l, r)) {
         return a[l];
     }

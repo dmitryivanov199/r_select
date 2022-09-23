@@ -12,7 +12,7 @@ void copy_array(int *dst, const int *src, unsigned int n);
 
 int compare_numbers(const void *a, const void *b);
 
-unsigned int get_random_i(unsigned int n);
+unsigned int get_random_i();
 
 void print_array(int *a, unsigned int n);
 
@@ -28,7 +28,7 @@ int main() {
 }
 
 bool run_tests() {
-    const unsigned int tests_number{50000};
+    const unsigned int tests_number{100000};
 
     for (unsigned int current_test{0}; current_test < tests_number; current_test++) {
         const unsigned int n{get_random_array_number()};
@@ -39,7 +39,7 @@ bool run_tests() {
         copy_array(std_sorted_a, source_a, n);
         std::qsort(std_sorted_a, n, sizeof(int), compare_numbers);
 
-        unsigned int i{get_random_i(n)};
+        unsigned int i{get_random_i()};
         int result{r_select(source_a, n, i)};
 
         if (i > n) {
@@ -77,8 +77,9 @@ void fill_array(int *a, unsigned int n) {
     const int min{-100};
     const int max{100};
 
+    std::srand(time(0));
+
     for (unsigned int i{0}; i < n; i++) {
-        std::srand(time(0));
         a[i] = min + std::rand() % (max - min + 1);
     }
 }
@@ -95,7 +96,7 @@ int compare_numbers(const void *a, const void *b) {
     return arg1 > arg2;
 }
 
-unsigned int get_random_i(unsigned int n) {
+unsigned int get_random_i() {
     const unsigned int min{1};
     const unsigned int max{1000};
     std::srand(time(0));

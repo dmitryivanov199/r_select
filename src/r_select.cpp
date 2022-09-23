@@ -19,6 +19,11 @@ static unsigned int make_partition(int *a, unsigned int l, unsigned int r);
 int r_select(const int *a, unsigned int n, unsigned int i) {
     int a_for_sorting[n];
     copy_array(a_for_sorting, a, n);
+
+    if (i > n) {
+        i = n;
+    }
+
     return make_r_select(a_for_sorting, 0, n - 1, i - 1);
 }
 
@@ -31,21 +36,17 @@ void copy_array(int *dst, const int *src, unsigned int n) {
 }
 
 int make_r_select(int *a, unsigned int l, unsigned int r, unsigned int i) {
-    if (i > r) {
-        i = r;
-    }
-
     if (is_base_case(l, r)) {
-        return a[l];
+        return a[l + 1];
     }
 
     unsigned int pivot_index{choose_pivot_index(l, r)};
     swap_elements(a[l], a[pivot_index]);
     unsigned int j{make_partition(a, l, r)};
-    unsigned int k{j - l};
+    unsigned int k{j - l + 1};
 
     if (i == k) {
-        return a[j];
+        return a[j + 1];
     }
     else if (i < k) {
         return make_r_select(a, l, j - 1, i);
@@ -56,7 +57,7 @@ int make_r_select(int *a, unsigned int l, unsigned int r, unsigned int i) {
 }
 
 bool is_base_case(unsigned int l, unsigned int r) {
-    return l >= r;
+    return l == r;
 }
 
 unsigned int choose_pivot_index(unsigned int l, unsigned int r) {
